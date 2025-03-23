@@ -1,16 +1,18 @@
 spring:
   application:
     name: OMSsystem
-  datasource: 
-	 driver-class-name: com.mysql.cj.jdbc.Driver
-	 url: jdbc:mysql://localhost:3306/YBtest
-	 username: root
-	 password: root
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Yajat
+    username: root
+    password: root
+
   jpa:
     hibernate:
-    ddl-auto: update
+      ddl-auto: update
     show-sql: true
-    database:
-    database-platform: org.hibernate.dialect.H2Dialect
-server: 
-  port: 3306
+    database-platform: org.hibernate.dialect.MySQL8Dialect  # Use MySQL dialect
+
+server:
+  port: 8085  # Change from 3306 (conflicts with MySQL)
