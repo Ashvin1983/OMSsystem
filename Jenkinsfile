@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME ='opt/homebrew/bin/mvn'
+        MAVEN_HOME ='/opt/homebrew/Cellar/maven/3.9.9/libexec'
     }
 
     stages {
@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "${MAVEN_HOME} clean package"
+                    sh "${MAVEN_HOME}/bin/mvn clean package"
                 }
             }
         }
