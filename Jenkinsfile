@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh "${MAVEN_HOME} test"
+                    sh "${MAVEN_HOME}/bin/mvn test"
                 }
             }
         }
