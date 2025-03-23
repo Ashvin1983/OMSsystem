@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "${MAVEN_HOME}/bin/mvn clean package"
+                    sh "${MAVEN_HOME} clean package"
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh "${MAVEN_HOME}/bin/mvn test"
+                    sh "${MAVEN_HOME} test"
                 }
             }
         }
