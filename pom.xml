@@ -110,6 +110,18 @@
 		            <scope>provided</scope>
 		</dependency>
 		    </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Dummy Releases</name>
+            <url>http://localhost:8081/repository/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal.snapshot.repo</id>
+            <name>Dummy Snapshots</name>
+            <url>http://localhost:8081/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 		    <build>
 		        <plugins>
                  <plugin>
