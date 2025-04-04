@@ -28,13 +28,18 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                script {
-                    sh "${MAVEN_HOME}/bin/mvn deploy"
-                }
-            }
-        }
+       stage('Deploy') {
+           steps {
+               script {
+                   def repoId = "internal.repo"
+                   def repoUrl = "http://localhost:8081/repository/maven-releases"
+                   def repoLayout = "default"
+
+                   sh "mvn clean deploy -DaltDeploymentRepository=${repoId}::${repoLayout}::${repoUrl}"
+               }
+           }
+       }
+
     }
 
     post {
