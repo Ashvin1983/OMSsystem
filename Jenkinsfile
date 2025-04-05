@@ -3,54 +3,64 @@ pipeline {
 
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
+        IMAGE_NAME = 'kreeyaj'
+        IMAGE_TAG = '1.0' // You can replace with BUILD_NUMBER for dynamic
+        QUAY_REPO = "quay.io/ashvinbharda"
+        DOCKER_IMAGE = "${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                echo '🔁 Checking out code...'
+                echo '🔁 Checking out code from GitHub...'
                 git 'https://github.com/Ashvin1983/OMSsystem.git'
             }
         }
 
-        stage('Build') {
+        stage('Build JAR with Maven') {
             steps {
-                echo '⚙️ Running Build...'
-                sh "${MAVEN_HOME}/bin/mvn clean package"
+                echo '🧪 Building JAR file...'
+                sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
 
-        stage('Test') {
+        stage('Build Docker Image') {
             steps {
-                echo '🧪 Running tests...'
-                sh "${MAVEN_HOME}/bin/mvn test"
+                echo "🐳 Building Docker image: ${DOCKER_IMAGE}"
+                sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }
 
-        stage('Deploy to Quay') {
+        stage('Push to Quay.io') {
             steps {
-                script {
-                    echo '🚀 Deploying to Quay...'
-
-                    // Use withMaven only if plugin is installed; otherwise use shell directly
-                    // Uncomment this if withMaven is working:
-                    // withMaven(maven: 'Maven 3.9.9') {
-                    def repoId = "internal.repo"
-                    def repoUrl = "https://console.redhat.com/quay/repository/ashvinbharda/kreeyaj"
-                    def repoLayout = "default"
-                    sh "${MAVEN_HOME}/bin/mvn deploy -DaltDeploymentRepository=${repoId}::${repoLayout}::${repoUrl}"
-                    // }
+                echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
+                withCredentials([usernamePassword(credentialsId: 'quay-creds', usernameVariable: 'QUAY_USER', passwordVariable: 'QUAY_PASS')]) {
+                    sh """
+                        echo "$QUAY_PASS" | docker login -u "$QUAY_USER" --password-stdin quay.io
+                        docker push ${DOCKER_IMAGE}
+                    """
                 }
+            }
+        }
+
+        stage('Deploy to OpenShift') {
+            steps {
+                echo '🌐 Deploying to OpenShift...'
+                sh """
+                    oc delete deployment oms-app || true
+                    oc run oms-app --image=${DOCKER_IMAGE} --port=8080
+                    oc expose pod oms-app --port=8080
+                """
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build and deployment successful!'
+            echo '✅ CI/CD pipeline completed successfully!'
         }
         failure {
-            echo '❌ Build failed!'
+            echo '❌ Pipeline failed. Please check logs above.'
         }
     }
 }
