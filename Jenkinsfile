@@ -16,7 +16,6 @@ pipeline {
                 git 'https://github.com/Ashvin1983/OMSsystem.git'
             }
         }
-
         stage('Build JAR with Maven') {
             steps {
                 echo '🧪 Building JAR file...'
