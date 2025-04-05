@@ -31,14 +31,26 @@ pipeline {
             }
         }
 
-        stage('Install Locally') {
+        /*stage('Install Locally') {
             steps {
                 script {
                 echo '🧪 Running Install ...'
                     sh "${MAVEN_HOME}/bin/mvn clean install"
                 }
             }
-        }
+        }*/
+        stage('Deploy') {
+                  steps {
+                      withMaven(maven: 'Maven3') {
+                          script {
+                              def repoId = "internal.repo"
+                              def repoUrl = "https://console.redhat.com/quay/repository/ashvinbharda/kreeyaj"
+                              def repoLayout = "default"
+                              sh "mvn clean deploy -DaltDeploymentRepository=${repoId}::${repoLayout}::${repoUrl}"
+                          }
+                      }
+                  }
+              }
     }
 
     post {
