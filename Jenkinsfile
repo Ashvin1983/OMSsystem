@@ -22,12 +22,16 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                echo "🐳 Building Docker image: ${DOCKER_IMAGE}"
-                sh "docker build -f docker/Dockerfile -t ${DOCKER_IMAGE} ."
-            }
-        }
+       stage('Build Docker Image') {
+           steps {
+               script {
+                   sh 'echo "📦 Checking if Dockerfile exists:"'
+                   sh 'ls -la build/docker/ || echo "❌ Dockerfile not found!"'
+               }
+
+               sh "docker build -f build/docker/Dockerfile -t ${DOCKER_IMAGE} ."
+           }
+       }
         stage('Push to Quay.io') {
             steps {
                 echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
