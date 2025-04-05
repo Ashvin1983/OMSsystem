@@ -30,7 +30,7 @@ pipeline {
 
      stage('Install Locally') {
          steps {
-             sh 'mvn clean install'
+             sh "${MAVEN_HOME}/bin/mvn clean install'
          }
      }
 
