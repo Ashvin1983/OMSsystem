@@ -37,10 +37,9 @@ pipeline {
             steps {
                 echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
                 withCredentials([usernamePassword(credentialsId: 'quay-creds', usernameVariable: 'QUAY_USER', passwordVariable: 'QUAY_PASS')]) {
-                    sh """
+                    sh '''
                         echo "$QUAY_PASS" | docker login -u "$QUAY_USER" --password-stdin quay.io
-                        docker push ${DOCKER_IMAGE}
-                    """
+                    '''
                 }
             }
         }
