@@ -28,11 +28,13 @@ pipeline {
             }
         }
 
-       stage('Install Locally') {
-           steps {
-               sh 'mvn clean install'
-           }
-       }
+     stage('Install Locally') {
+         steps {
+             sh 'mvn clean install'
+         }
+     }
+
+    }
 
     post {
         success {
