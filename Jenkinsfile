@@ -4,11 +4,6 @@ pipeline {
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
     }
-
-    tools {
-        maven 'Maven 3.9.9'  // Must match Jenkins tool name
-    }
-
     stages {
 
         stage('Checkout') {
