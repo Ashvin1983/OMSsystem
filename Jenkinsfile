@@ -25,15 +25,10 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -f docker/Dockerfile -t quay.io/ashvinbharda/kreeyaj:1.0 docker/'
-            }
-        }
-       /* stage('Build Docker Image') {
-            steps {
                 echo "🐳 Building Docker image: ${DOCKER_IMAGE}"
                 sh "docker build -t ${DOCKER_IMAGE} ."
             }
-        }*/
+        }
         stage('Push to Quay.io') {
             steps {
                 echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
