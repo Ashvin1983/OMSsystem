@@ -4,7 +4,9 @@ pipeline {
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
     }
-
+    tools {
+        maven 'Maven 3.9.9'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -39,18 +41,20 @@ pipeline {
                 }
             }
         }*/
-        stage('Deploy') {
-                  steps {
-                      withMaven(maven: 'Maven3') {
+        stages {
+               stage('Build with Maven') {
+                   steps {
                           script {
+                            withMaven(maven: 'Maven 3.9.9') {
                               def repoId = "internal.repo"
                               def repoUrl = "https://console.redhat.com/quay/repository/ashvinbharda/kreeyaj"
                               def repoLayout = "default"
                               sh "mvn clean deploy -DaltDeploymentRepository=${repoId}::${repoLayout}::${repoUrl}"
-                          }
-                      }
-                  }
-              }
+                            }
+                         }
+                   }
+               }
+        }
     }
 
     post {
