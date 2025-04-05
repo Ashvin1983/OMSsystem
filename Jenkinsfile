@@ -28,7 +28,7 @@ pipeline {
                    sh 'echo "📦 Checking if Dockerfile exists:"'
                    sh 'ls -la build/docker/ || echo "❌ Dockerfile not found!"'
                }
-               sh "docker build -f build/docker/Dockerfile -t ${DOCKER_IMAGE} ."
+               sh "docker build -f docker/Dockerfile -t ${DOCKER_IMAGE} ."
             }
        }
         stage('Push to Quay.io') {
