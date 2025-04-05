@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo '🔁 Checking out code...'
                 git 'https://github.com/Ashvin1983/OMSsystem.git'
             }
         }
@@ -15,6 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                 echo '🧪 Running Build...'
                     sh "${MAVEN_HOME}/bin/mvn clean package"
                 }
             }
@@ -23,6 +25,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
+                     echo '🧪 Running tests...'
                     sh "${MAVEN_HOME}/bin/mvn test"
                 }
             }
@@ -31,6 +34,7 @@ pipeline {
         stage('Install Locally') {
             steps {
                 script {
+                echo '🧪 Running Install ...'
                     sh "${MAVEN_HOME}/bin/mvn clean install"
                 }
             }
