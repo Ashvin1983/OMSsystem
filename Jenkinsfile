@@ -30,7 +30,7 @@ pipeline {
        stage('Build Docker Image') {
            steps {
                 echo "🐳 Building Docker image from docker/Dockerfile"
-                sh "docker build -f docker/Dockerfile -t ${DOCKER_IMAGE} ."
+                sh "docker build -t ${DOCKER_IMAGE} -f docker/Dockerfile ."
             }
        }
         stage('Push to Quay.io') {
