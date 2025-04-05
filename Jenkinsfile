@@ -28,18 +28,11 @@ pipeline {
             }
         }
 
-       stage('Deploy') {
+       stage('Install Locally') {
            steps {
-               script {
-                   def repoId = "internal.repo"
-                   def repoUrl = "http://localhost:8081/repository/maven-releases"
-                   def repoLayout = "default"
-                   sh "mvn clean deploy -DaltDeploymentRepository=${repoId}::${repoLayout}::${repoUrl}"
-               }
+               sh 'mvn clean install'
            }
        }
-
-    }
 
     post {
         success {
