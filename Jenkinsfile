@@ -26,7 +26,7 @@ pipeline {
            steps {
                script {
                    sh 'echo "📦 Checking if Dockerfile exists:"'
-                   sh 'ls -la build/docker/ || echo "❌ Dockerfile not found!"'
+                   sh 'ls -la docker/Dockerfile || echo "❌ Dockerfile not found!"'
                }
                sh "docker build -f docker/Dockerfile -t ${DOCKER_IMAGE} ."
             }
