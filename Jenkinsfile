@@ -22,6 +22,12 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
+        stage('List Files') {
+            steps {
+                sh 'echo "Listing files in the Jenkins workspace:"'
+                sh 'ls -R'
+            }
+        }
        stage('Build Docker Image') {
            steps {
                 echo "🐳 Building Docker image from docker/Dockerfile"
