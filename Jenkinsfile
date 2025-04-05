@@ -43,7 +43,6 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy to OpenShift') {
             steps {
                 echo '🌐 Deploying to OpenShift...'
