@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME ='/opt/homebrew/Cellar/maven/3.9.9/libexec'
+        MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Ashvin1983/OMSsystem.git'  // Replace with your Git repo URL
+                git 'https://github.com/Ashvin1983/OMSsystem.git'
             }
         }
 
@@ -28,12 +28,13 @@ pipeline {
             }
         }
 
-     stage('Install Locally') {
-         steps {
-             sh "${MAVEN_HOME}/bin/mvn clean install'
-         }
-     }
-
+        stage('Install Locally') {
+            steps {
+                script {
+                    sh "${MAVEN_HOME}/bin/mvn clean install"
+                }
+            }
+        }
     }
 
     post {
