@@ -48,9 +48,9 @@ pipeline {
             steps {
                 echo '🌐 Deploying to OpenShift...'
                 sh """
-                    oc delete deployment oms-app || true
-                    oc run oms-app --image=${DOCKER_IMAGE} --port=8080
-                    oc expose pod oms-app --port=8080
+                    oc delete deployment omssystem || true
+                    oc run omssystem --image=${DOCKER_IMAGE} --port=8080
+                    oc expose pod omssystem --port=8080
                 """
             }
         }
