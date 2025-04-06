@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM openjdk:17-jdk-slim
 
 COPY target/OMSsystem-1.0.0.jar OMSsystem-1.0.0.jar
 
