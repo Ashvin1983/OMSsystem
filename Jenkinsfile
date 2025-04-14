@@ -39,10 +39,9 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                echo "🐳 Building Docker image from docker/Dockerfile..."
-                sh """
-                  docker build -t ${DOCKER_IMAGE} -f .jenkins/workspace/OMSsystem_dev-branch/docker/Dockerfile .jenkins/workspace/OMSsystem_dev-branch
-                """
+                dir('OMSsystem_dev-branch') {
+                    sh "docker build -t ${DOCKER_IMAGE} -f docker/Dockerfile ."
+                }
             }
         }
 
