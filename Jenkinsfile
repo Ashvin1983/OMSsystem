@@ -13,23 +13,18 @@ pipeline {
     }
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                echo '🔁 Checking out code from GitHub...'
-                git 'https://github.com/Ashvin1983/OMSsystem.git'
-            }
-        }
+         stage('Checkout Code') {
+                   steps {
+                   cho '🧪 checkout code...'
+                        git branch: 'dev-branch', url: 'https://github.com/Ashvin1983/OMSsystem.git'
+                   }
+               }
         stage('Build JAR with Maven') {
             steps {
                 echo '🧪 Building JAR file...'
                 sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
-         stage('Checkout') {
-             steps {
-                 checkout scm
-             }
-         }
        stage('Login to OpenShift') {
                    steps {
                        sh "oc login ${OPENSHIFT_SERVER} --token=${OPENSHIFT_TOKEN} --insecure-skip-tls-verify=true"
