@@ -8,7 +8,7 @@ pipeline {
         NAMESPACE = "omssystem"
         IMAGE_NAME = 'kreeyaj'
         IMAGE_TAG = '1.0' // Replace with "${BUILD_NUMBER}" if you want unique tags
-        QUAY_REPO = "quay.io/ashvinbharda"
+        QUAY_REPO = "quay.io/kreeyajx"
         DOCKER_IMAGE = "${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
         DEPLOYMENT_NAME = "kreeyaj" // 🛠️ Add this to avoid undefined variable error
     }
