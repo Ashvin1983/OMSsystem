@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
-        OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
-        OPENSHIFT_TOKEN = credentials('sha256~NxVrFSKZpvX-9OSuo1hF_goB8BfPQTmihZoJfDXnGZo')
-        NAMESPACE="omssystem"
-        IMAGE_NAME = 'kreeyaj'
-        IMAGE_TAG = '1.0' // You can replace with BUILD_NUMBER for dynamic
-        QUAY_REPO = "quay.io/ashvinbharda"
-        DOCKER_IMAGE = "${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
-    }
+            MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
+            OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
+            OPENSHIFT_TOKEN = credentials('sha256~FMZJJoSuySI5EXbPqRZpH_MJG3nhJ3UAqxzJsApUVfM')
+            NAMESPACE = "omssystem"
+            IMAGE_NAME = 'kreeyaj'
+            IMAGE_TAG = '1.0' // Use "${BUILD_NUMBER}" for dynamic versioning
+            QUAY_REPO = "quay.io/ashvinbharda"
+            DOCKER_IMAGE = "${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
+        }
     stages {
 
          stage('Checkout Code') {
