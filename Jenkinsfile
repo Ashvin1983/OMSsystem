@@ -3,6 +3,9 @@ pipeline {
 
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
+        OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
+        OPENSHIFT_TOKEN = credentials('sha256~NxVrFSKZpvX-9OSuo1hF_goB8BfPQTmihZoJfDXnGZo')
+        NAMESPACE=omssystem
         IMAGE_NAME = 'kreeyaj'
         IMAGE_TAG = '1.0' // You can replace with BUILD_NUMBER for dynamic
         QUAY_REPO = "quay.io/ashvinbharda"
@@ -27,6 +30,11 @@ pipeline {
                  checkout scm
              }
          }
+       stage('Login to OpenShift') {
+                   steps {
+                       sh "oc login ${OPENSHIFT_SERVER} --token=${OPENSHIFT_TOKEN} --insecure-skip-tls-verify=true"
+                   }
+         }
        stage('Build Docker Image') {
            steps {
                 echo "🐳 Building Docker image from docker/Dockerfile"
@@ -44,16 +52,16 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to OpenShift') {
-            steps {
-                echo '🌐 Deploying to OpenShift...'
-                sh """
-                    oc delete pod omssystem || true
-                    oc delete service omssystem || true
-                    oc run omssystem --image=${DOCKER_IMAGE} --port=8080
-                    oc expose pod omssystem --port=8080
-                """
-            }
+         stage('Tag Image') {
+                    steps {
+                        // This assumes the image is already built and pushed to OpenShift image stream
+                        sh "oc tag ${NAMESPACE}/${IMAGE_TAG} ${NAMESPACE}/${DEPLOYMENT_NAME}:latest"
+                    }
+                }
+                stage('Trigger Deployment') {
+                    steps {
+                        sh "oc rollout restart deployment/${DEPLOYMENT_NAME} -n ${NAMESPACE}"
+                    }
         }
     }
 
