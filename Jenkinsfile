@@ -15,7 +15,7 @@ pipeline {
 
          stage('Checkout Code') {
                    steps {
-                   cho '🧪 checkout code...'
+                   echo '🧪 checkout code...'
                         git branch: 'dev-branch', url: 'https://github.com/Ashvin1983/OMSsystem.git'
                    }
                }
