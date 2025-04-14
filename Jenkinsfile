@@ -5,7 +5,7 @@ pipeline {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
         OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
         OPENSHIFT_TOKEN = credentials('sha256~NxVrFSKZpvX-9OSuo1hF_goB8BfPQTmihZoJfDXnGZo')
-        NAMESPACE=omssystem
+        NAMESPACE="omssystem"
         IMAGE_NAME = 'kreeyaj'
         IMAGE_TAG = '1.0' // You can replace with BUILD_NUMBER for dynamic
         QUAY_REPO = "quay.io/ashvinbharda"
