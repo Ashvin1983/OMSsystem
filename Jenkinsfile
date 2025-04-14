@@ -3,7 +3,7 @@ pipeline {
 
     environment {
             MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
-            OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
+            OPENSHIFT_SERVER = 'https://api.crc.testing:6443/'
             OPENSHIFT_TOKEN = credentials('openshift-token')
             NAMESPACE = "omssystem"
             IMAGE_NAME = 'kreeyaj'
