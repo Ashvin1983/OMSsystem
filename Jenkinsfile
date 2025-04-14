@@ -27,15 +27,16 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
-
         stage('Login to OpenShift') {
             steps {
-                echo '🔐 Logging into OpenShift...'
-                sh 'oc version'
-                sh "oc login ${OPENSHIFT_SERVER} --token=${OPENSHIFT_TOKEN} --insecure-skip-tls-verify=true"
+                withEnv(["OPENSHIFT_TOKEN=${OPENSHIFT_TOKEN}"]) {
+                    sh '''
+                        echo "🔐 Logging into OpenShift..."
+                        oc login ${OPENSHIFT_SERVER} --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify=true
+                    '''
+                }
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 echo "🐳 Building Docker image from docker/Dockerfile..."
@@ -49,7 +50,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'quay-creds', usernameVariable: 'QUAY_USER', passwordVariable: 'QUAY_PASS')]) {
                     sh '''
                         echo "$QUAY_PASS" | docker login -u "$QUAY_USER" --password-stdin quay.io
-                        docker push ${DOCKER_IMAGE}
+                       sh "docker tag ${DOCKER_IMAGE} ${QUAY_REPO}/${IMAGE_NAME}:latest"
+                       sh "docker push ${QUAY_REPO}/${IMAGE_NAME}:latest"
+
                     '''
                 }
             }
