@@ -50,8 +50,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'quay-creds', usernameVariable: 'QUAY_USER', passwordVariable: 'QUAY_PASS')]) {
                     sh '''
                         echo "$QUAY_PASS" | docker login -u "$QUAY_USER" --password-stdin quay.io
-                       sh "docker tag ${DOCKER_IMAGE} ${QUAY_REPO}/${IMAGE_NAME}:latest"
-                       sh "docker push ${QUAY_REPO}/${IMAGE_NAME}:latest"
+                       sh "docker tag ${DOCKER_IMAGE} ${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
+                       sh "docker push ${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
 
                     '''
                 }
