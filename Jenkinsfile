@@ -4,7 +4,7 @@ pipeline {
     environment {
             MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
             OPENSHIFT_SERVER = 'https://your-openshift-api-url:6443'
-            OPENSHIFT_TOKEN = credentials('sha256~FMZJJoSuySI5EXbPqRZpH_MJG3nhJ3UAqxzJsApUVfM')
+            OPENSHIFT_TOKEN = credentials('openshift-token')
             NAMESPACE = "omssystem"
             IMAGE_NAME = 'kreeyaj'
             IMAGE_TAG = '1.0' // Use "${BUILD_NUMBER}" for dynamic versioning
