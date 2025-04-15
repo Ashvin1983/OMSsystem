@@ -37,14 +37,12 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                dir('OMSsystem_dev-branch') {
-                    sh "docker build -t ${DOCKER_IMAGE} -f docker/Dockerfile ."
-                }
-            }
-        }
-
+       stage('Build Docker Image') {
+           steps {
+               echo "🐳 Building Docker image from docker/Dockerfile..."
+               sh "docker build -t ${DOCKER_IMAGE} -f docker/Dockerfile ."
+           }
+       }
         stage('Push to Quay.io') {
             steps {
                 echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
