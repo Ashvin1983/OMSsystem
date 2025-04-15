@@ -47,12 +47,11 @@ pipeline {
             steps {
                 echo "🚀 Pushing Docker image to Quay: ${DOCKER_IMAGE}"
                 withCredentials([usernamePassword(credentialsId: 'quay-creds', usernameVariable: 'QUAY_USER', passwordVariable: 'QUAY_PASS')]) {
-                    sh '''
-                        echo "$QUAY_PASS" | docker login -u "$QUAY_USER" --password-stdin quay.io
-                       sh "docker tag ${DOCKER_IMAGE} ${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
-                       sh "docker push ${QUAY_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
-
-                    '''
+                    sh """
+                        docker tag ${DOCKER_IMAGE} quay.io/ashvinbharda/kreeyaj:latest
+                        docker push ${DOCKER_IMAGE}
+                        docker push quay.io/ashvinbharda/kreeyaj:latest
+                    """
                 }
             }
         }
