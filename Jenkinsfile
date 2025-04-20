@@ -48,8 +48,8 @@ pipeline {
          stage('Build Docker Image') {
             steps {
                 sh '''
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG .
-                '''
+                    docker build -t $IMAGE_NAME:$IMAGE_TAG -f docker/Dockerfile .
+                 '''
             }
         }
          stage('Tag Docker Image') {
