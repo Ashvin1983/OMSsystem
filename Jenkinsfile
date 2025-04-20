@@ -20,7 +20,6 @@ pipeline {
                 git branch: 'dev-branch', url: 'https://github.com/Ashvin1983/OMSsystem.git'
             }
         }
-
         stage('Build JAR with Maven') {
             steps {
                 echo '📦 Building JAR file...'
@@ -37,14 +36,14 @@ pipeline {
                 }
             }
         }
-         stage('Docker Login') {
-            steps {
-                sh '''
-                    echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USER" --password-stdin quay.io
-                '''
-            }
-        }
-        stage('Build Docker Image') {
+       stage('Docker Login') {
+             steps {
+                 sh '''
+                     echo "DOCKER_PASSWORD" | docker login -u="DOCKER_USER" --password-stdin quay.io
+                 '''
+             }
+         }
+         stage('Build Docker Image') {
             steps {
                 sh '''
                     docker build -t $IMAGE_NAME:$IMAGE_TAG .
@@ -72,8 +71,7 @@ pipeline {
             }
         }
     }
-
-    post {
+   post {
         success {
             echo '✅ CI/CD pipeline completed successfully!'
         }
