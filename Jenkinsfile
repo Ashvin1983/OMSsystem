@@ -27,8 +27,7 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package -DskipTests"
             }
         }
-
-        stage('Login to OpenShift') {
+         stage('Login to OpenShift') {
             steps {
                 withEnv(["OPENSHIFT_TOKEN=${OPENSHIFT_TOKEN}"]) {
                     sh '''
@@ -38,15 +37,13 @@ pipeline {
                 }
             }
         }
-
-        stage('Docker Login') {
+         stage('Docker Login') {
             steps {
                 sh '''
                     echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USER" --password-stdin quay.io
                 '''
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh '''
@@ -54,24 +51,21 @@ pipeline {
                 '''
             }
         }
-
-        stage('Tag Docker Image') {
+         stage('Tag Docker Image') {
             steps {
                 sh '''
                     docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
         }
-
-        stage('Push to Quay.io') {
+         stage('Push to Quay.io') {
             steps {
                 sh '''
                     docker push $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
         }
-
-        stage('Trigger Rollout') {
+         stage('Trigger Rollout') {
             steps {
                 echo '🔄 Triggering OpenShift rollout...'
                 sh "oc rollout restart deployment/${IMAGE_NAME} -n ${NAMESPACE}"
