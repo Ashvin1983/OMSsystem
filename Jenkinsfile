@@ -39,7 +39,7 @@ pipeline {
        stage('Docker Login') {
              steps {
                  sh '''
-                     echo "DOCKER_PASSWORD" | docker login -u="DOCKER_USER" --password-stdin quay.io
+                      echo "DOCKER_PASSWORD" | docker login -u="DOCKER_USER" --password-stdin quay.io
                  '''
              }
          }
