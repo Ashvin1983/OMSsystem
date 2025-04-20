@@ -6,7 +6,7 @@ pipeline {
         OPENSHIFT_SERVER = 'https://api.rm3.7wse.p1.openshiftapps.com:6443'
         OPENSHIFT_TOKEN = credentials('openshift-token') // Jenkins Secret Text
         NAMESPACE = "omssystem"
-        DOCKER_USER = 'ashvinbharda+kreeyaj'
+        DOCKER_USER = 'kreeyaj+kreeyaj'
         DOCKER_PASSWORD = credentials('quay-creds') // Quay robot token
         IMAGE_NAME = 'kreeyaj'
         IMAGE_TAG = '1.0'
