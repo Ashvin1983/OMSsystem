@@ -5,7 +5,7 @@ pipeline {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
         OPENSHIFT_SERVER = 'https://api.rm3.7wse.p1.openshiftapps.com:6443'
         OPENSHIFT_TOKEN = credentials('openshift-token') // Jenkins Secret Text
-        NAMESPACE = "omssystem"
+        NAMESPACE = "kreeyaj-dev"
         DOCKER_USER = 'kreeyaj+kreeyaj'
         DOCKER_PASSWORD = credentials('quay-creds') // Quay robot token
         IMAGE_NAME = 'kreeyaj'
