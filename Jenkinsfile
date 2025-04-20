@@ -38,10 +38,12 @@ pipeline {
         }
        stage('Docker Login') {
              steps {
-                 sh '''
-                      echo "DOCKER_PASSWORD" | docker login -u="DOCKER_USER" --password-stdin quay.io
-                 '''
-             }
+                  withCredentials([string(credentialsId: 'quay-creds', variable: 'DOCKER_PASSWORD')]) {
+                  sh '''
+                       echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USER" --password-stdin quay.io
+                    '''
+                }
+            }
          }
          stage('Build Docker Image') {
             steps {
