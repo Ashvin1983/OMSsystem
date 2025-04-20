@@ -10,7 +10,8 @@ pipeline {
         DOCKER_PASSWORD = credentials('quay-creds') // Quay robot token
         IMAGE_NAME = 'kreeyaj'
         IMAGE_TAG = '1.0'
-        REGISTRY = 'quay.io/kreeyaj'
+        //REGISTRY = 'quay.io/kreeyaj'
+        REGISTRY = "image-registry.openshift-image-registry.svc:5000"
     }
 
     stages {
