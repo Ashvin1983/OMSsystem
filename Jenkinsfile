@@ -69,7 +69,7 @@ pipeline {
          stage('Trigger Rollout') {
             steps {
                 echo '🔄 Triggering OpenShift rollout...'
-                sh "oc rollout restart deployment/${IMAGE_NAME} -n ${NAMESPACE}"
+                sh "oc rollout restart deployment/omssystem -n ${NAMESPACE}"
             }
         }
     }
